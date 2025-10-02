@@ -34,15 +34,26 @@ const PetCard = ({ pet }: PetCardProps) => {
 
       <CardContent className="p-6">
         <div className="mb-4">
-          <h3 className="text-2xl font-bold mb-1">{pet.name}</h3>
-          <p className="text-muted-foreground">
-            {pet.breed} • {pet.age} • {pet.gender}
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-2xl font-bold">{pet.name}</h3>
+            <Badge 
+              variant={pet.availability === 'Available' ? 'default' : pet.availability === 'Reserved' ? 'secondary' : 'outline'}
+              className="text-xs"
+            >
+              {pet.availability}
+            </Badge>
+          </div>
+          <p className="text-muted-foreground text-sm">
+            {pet.breed} • {pet.age}
+          </p>
+          <p className="text-muted-foreground text-sm">
+            {pet.gender} • {pet.weight}
           </p>
         </div>
 
         <div className="flex items-center justify-between mb-4">
           <span className="text-2xl font-bold text-primary">
-            ₹{pet.price.toLocaleString()}
+            ${pet.price.toLocaleString()}
           </span>
         </div>
 

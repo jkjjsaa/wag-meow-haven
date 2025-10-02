@@ -63,25 +63,46 @@ const PetDetail = () => {
             <div>
               <div className="mb-4">
                 <h1 className="text-4xl font-bold mb-2">{pet.name}</h1>
-                <p className="text-xl text-muted-foreground">
-                  {pet.breed} • {pet.age} • {pet.gender}
+                <p className="text-xl text-muted-foreground mb-2">
+                  {pet.breed} • {pet.age}
+                </p>
+                <p className="text-lg text-muted-foreground">
+                  {pet.gender} • {pet.weight}
                 </p>
               </div>
 
-              {pet.vaccinated && (
-                <Badge className="mb-4 bg-secondary">✓ Fully Vaccinated</Badge>
-              )}
+              <div className="flex gap-2 mb-4 flex-wrap">
+                {pet.vaccinated && (
+                  <Badge className="bg-secondary">✓ Vaccinated</Badge>
+                )}
+                <Badge 
+                  variant={pet.availability === 'Available' ? 'default' : pet.availability === 'Reserved' ? 'secondary' : 'outline'}
+                >
+                  {pet.availability}
+                </Badge>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-sm text-muted-foreground mb-1">Personality</p>
+                <p className="font-medium">{pet.personality}</p>
+              </div>
 
               <div className="mb-6">
                 <span className="text-4xl font-bold text-primary">
-                  ₹{pet.price.toLocaleString()}
+                  ${pet.price.toLocaleString()}
                 </span>
               </div>
 
               <div className="flex gap-4 mb-8">
-                <Button size="lg" variant="adopt" className="flex-1" onClick={handleAddToCart}>
+                <Button 
+                  size="lg" 
+                  variant="adopt" 
+                  className="flex-1" 
+                  onClick={handleAddToCart}
+                  disabled={pet.availability !== 'Available'}
+                >
                   <ShoppingCart className="mr-2 h-5 w-5" />
-                  Add to Cart
+                  {pet.availability === 'Available' ? 'Add to Cart' : pet.availability}
                 </Button>
                 <Button size="lg" variant="outline" onClick={handleAddToWishlist}>
                   <Heart className="h-5 w-5" />
